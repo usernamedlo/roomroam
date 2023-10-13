@@ -4,6 +4,16 @@
 
 html,
 body,
-:root{
+:root {
   height: 100%;
+}
+
+select.peer {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("../public/images/Arrow-down.svg");
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: right 10px center;
 }
