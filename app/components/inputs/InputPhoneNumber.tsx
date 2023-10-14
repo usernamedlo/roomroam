@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import {
     FieldErrors,
@@ -24,7 +24,8 @@ interface InputPhoneNumberProps {
     formatPrice?: boolean;
     required?: boolean;
     register: UseFormRegister<FieldValues>,
-    errors: FieldErrors
+    errors: FieldErrors,
+    autoFocus?: boolean,
 }
 
 const COUNTRIES: Country[] = [
@@ -51,8 +52,17 @@ const InputPhoneNumber: React.FC<InputPhoneNumberProps> = ({
     register,
     required,
     errors,
+    autoFocus,
 }) => {
     const [selectedDialCode, setSelectedDialCode] = useState<string>(COUNTRIES[0].dialCode);
+
+    const inputRef = useRef<HTMLInputElement | null>(null);
+
+    useEffect(() => {
+        if (autoFocus && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [autoFocus]);
 
     return (
         <div className="flex flex-col border-2 rounded-md">
@@ -98,6 +108,7 @@ const InputPhoneNumber: React.FC<InputPhoneNumberProps> = ({
                     register={register}
                     required={required}
                     errors={errors}
+                    autoFocus={true}
                 />
             </div>
         </div>

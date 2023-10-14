@@ -1,8 +1,8 @@
 "use client";
 
 import ky from "ky";
-import { AiFillGithub, AiOutlineMail } from "react-icons/ai";
-import { FaFacebookSquare } from "react-icons/fa";
+import { AiFillGithub } from "react-icons/ai";
+import { FcPhoneAndroid } from "react-icons/fc";
 import { FcGoogle } from "react-icons/fc";
 import { useCallback, useState } from "react";
 import {
@@ -15,11 +15,10 @@ import useRegisterEmailModal from "@/app/hooks/useRegisterModalEmail";
 import useRegisterPhoneModal from "@/app/hooks/useRegisterModalPhone";
 
 import Modal from "./Modal";
-import InputPhoneNumber from "../inputs/InputPhoneNumber";
 import Heading from "../Heading";
 import Button from "../Button";
 import Span from "../Span";
-import {toast} from "react-hot-toast/headless";
+import { toast } from "react-hot-toast/headless";
 import Input from "../inputs/Input";
 
 const RegisterModalEmail = () => {
@@ -34,25 +33,28 @@ const RegisterModalEmail = () => {
         formState: { errors }
     } = useForm<FieldValues>({
         defaultValues: {
-            name: "",
             email: "",
-            password: ""
+            name: "",
+            password: "",
         }
     });
 
-    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        setIsLoading(true);
+    const onSubmit: SubmitHandler<FieldValues> = (data) => {
 
-        try {
-            await ky.post('/api/register', { json: data }).json();
+        console.log(data);
 
-            toast.success('Registered!');
-            registerEmailModal.onClose();
-        } catch (error) {
-            toast.error("Something went wrong!");
-        } finally {
-            setIsLoading(false);
-        }
+        // setIsLoading(true);
+
+        // try {
+        //     ky.post('/api/register', { json: data }).json();
+
+        //     toast.success('Registered!');
+        //     registerEmailModal.onClose();
+        // } catch (error) {
+        //     toast.error("Something went wrong!");
+        // } finally {
+        //     setIsLoading(false);
+        // }
     }
 
     const onToggle = useCallback(() => {
@@ -62,12 +64,11 @@ const RegisterModalEmail = () => {
 
     const bodyContent = (
         <div className="flex flex-col gap-4">
-            <Heading
-                title="Welcome to Room Roam !"
-            />
-            <Input id="email" label="Email" type="email" disabled={isLoading} register={register} errors={errors} required />
-            <Input id="password" label="Password" type="password" disabled={isLoading} register={register} errors={errors} required />
-            <Span content=""/>
+            <Heading title="Welcome to Room Roam !"/>
+            <Input id="email" label="Email" disabled={isLoading} register={register} errors={errors} required  />
+            {/* <Input id="name" label="Name" disabled={isLoading} register={register} errors={errors} required />
+            <Input id="password" label="Password" type="password" disabled={isLoading} register={register} errors={errors} required /> */}
+            <Span content="" />
         </div>
     )
 
@@ -81,7 +82,7 @@ const RegisterModalEmail = () => {
             <Button
                 outline
                 label="Continue with Facebook"
-                icon={FaFacebookSquare}
+                src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png"
                 onClick={() => { }}
             />
             <Button
@@ -98,8 +99,8 @@ const RegisterModalEmail = () => {
             />
             <Button
                 outline
-                label="Continue with email"
-                icon={AiOutlineMail}
+                label="Continue with phone"
+                icon={FcPhoneAndroid}
                 onClick={onToggle}
             />
             <div className="text-neutral-500 text-center mt-4 font-light">
@@ -116,7 +117,7 @@ const RegisterModalEmail = () => {
 
     return (
         <Modal
-            disable={isLoading}
+            disabled={isLoading}
             isOpen={registerEmailModal.isOpen}
             title="Login or Signup"
             actionLabel="Continue"

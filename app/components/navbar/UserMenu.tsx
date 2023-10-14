@@ -1,20 +1,36 @@
 "use client";
-
+import { useEffect, useRef } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../Avatar";
 import MenuItem from "./MenuItem";
-import useRegisterModal from "../../hooks/useRegisterModalPhone";
+import useRegisterEmailModal from "@/app/hooks/useRegisterModalEmail";
 
 import { useCallback, useState } from 'react';
 
 const UserMenu = () => {
 
-    const registerModal = useRegisterModal();
+    const registerEmailModal = useRegisterEmailModal();
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleOpen = useCallback(() => {
         setIsOpen((value) => !value);
     }, []);
+
+    const handleClickOutside = useCallback((event: Event) => {
+        if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+            setIsOpen(false);
+        }
+    }, []);
+
+    const menuRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [handleClickOutside]);
+
 
     return (
         <div className="relative">
@@ -61,22 +77,24 @@ const UserMenu = () => {
 
             {isOpen && (
                 <div
+                    ref={menuRef}
                     className="
                         absolute 
-                        rounded-xl 
-                        shadow-md
+                        rounded-xl
+                        border-2 
+                        shadow-lg
                         w-[40vw]
                         md:w-3/4 
                         bg-white 
                         overflow-hidden 
-                        right-0 
+                        right-1 
                         top-12 
                         text-sm">
                     <div className="flex flex-col cursor-pointer">
                         <>
-                            <MenuItem onClick={registerModal.onOpen} label="Sign up" />
-                            <MenuItem onClick={() => {}} label="Login" />
-                            <MenuItem onClick={() => {}} label="Help Center" />
+                            <MenuItem onClick={registerEmailModal.onOpen} label="Sign up" />
+                            <MenuItem onClick={() => { }} label="Login" />
+                            <MenuItem onClick={() => { }} label="Help Center" />
                         </>
                     </div>
                 </div >

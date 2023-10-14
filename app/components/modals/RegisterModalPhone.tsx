@@ -1,8 +1,7 @@
 "use client";
 
 import ky from "ky";
-import { AiFillGithub, AiOutlinePhone } from "react-icons/ai";
-import { FaFacebookSquare } from "react-icons/fa";
+import { AiFillGithub, AiOutlineMail } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { useCallback, useState } from "react";
 import {
@@ -20,9 +19,9 @@ import InputPhoneNumber from "../inputs/InputPhoneNumber";
 import Heading from "../Heading";
 import Button from "../Button";
 import Span from "../Span";
-import {toast} from "react-hot-toast/headless";
+import { toast } from "react-hot-toast/headless";
 
-const RegisterModalPhone= () => {
+const RegisterModalPhone = () => {
 
     const RegisterModalPhone = useRegisterPhoneModal();
     const RegisterModalEmail = useRegisterEmailModal();
@@ -63,7 +62,7 @@ const RegisterModalPhone= () => {
             <Heading
                 title="Welcome to Room Roam !"
             />
-            <InputPhoneNumber id="phone" labelPhoneNumber="Phone Number" labelCountry="Country / Region" register={register} errors={errors} />
+            <InputPhoneNumber id="phone" labelPhoneNumber="Phone Number" labelCountry="Country / Region" register={register} errors={errors} autoFocus={true} />
             <Span content="We’ll call or text you to confirm your number. Standard message and data rates apply. " />
         </div>
     )
@@ -78,7 +77,7 @@ const RegisterModalPhone= () => {
             <Button
                 outline
                 label="Continue with Facebook"
-                icon={FaFacebookSquare}
+                src="https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png"
                 onClick={() => { }}
             />
             <Button
@@ -96,7 +95,7 @@ const RegisterModalPhone= () => {
             <Button
                 outline
                 label="Continue with email"
-                icon={AiOutlinePhone}
+                icon={AiOutlineMail}
                 onClick={onToggle}
             />
             <div className="text-neutral-500 text-center mt-4 font-light">

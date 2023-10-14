@@ -1,5 +1,8 @@
 'use client';
 
+import {useRef, useEffect} from "react";
+
+
 import {
     FieldErrors,
     FieldValues,
@@ -17,8 +20,11 @@ interface InputProps {
     phoneNumber?: boolean;
     required?: boolean;
     register: UseFormRegister<FieldValues>,
-    errors: FieldErrors
+    errors: FieldErrors,
+    autoFocus?: boolean,
 }
+
+
 
 const Input: React.FC<InputProps> = ({
     id,
@@ -31,7 +37,18 @@ const Input: React.FC<InputProps> = ({
     register,
     required,
     errors,
+    autoFocus,
 }) => {
+
+    const inputRef = useRef<HTMLInputElement | null>(null);
+
+
+    useEffect(() => {
+        if (autoFocus && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [autoFocus]);
+
     return (
         <div className="w-full relative">
             {formatPrice && (<BiDollar size={24} className="text-neutral-700 absolute top-5 left-2" />)}
@@ -42,6 +59,8 @@ const Input: React.FC<InputProps> = ({
                 placeholder=" "
                 type={type}
                 pattern={type === "tel" ? pattern : undefined}
+                autoFocus={autoFocus}
+                ref={inputRef}
                 className={`
                     peer
                     w-full
@@ -54,6 +73,7 @@ const Input: React.FC<InputProps> = ({
                     outline-none
                     transition
                     disabled:opacity-70
+                    text-black
                     disabled:cursor-not-allowed
                     ${formatPrice ? 'pl-9' : 'pl-4'}
                     ${errors[id] ? 'border-pyellow' : 'border-neutral-300'}
