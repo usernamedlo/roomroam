@@ -11,19 +11,21 @@ import {
     useForm
 } from "react-hook-form";
 
-import useRegisterModal from "../../hooks/useRegisterModal";
-
+import useRegisterEmailModal from "@/app/hooks/useRegisterModalEmail";
+import useRegisterPhoneModal from "@/app/hooks/useRegisterModalPhone";
 
 import Modal from "./Modal";
 import InputPhoneNumber from "../inputs/InputPhoneNumber";
 import Heading from "../Heading";
 import Button from "../Button";
 import Span from "../Span";
-import toast from "react-hot-toast/headless";
+import {toast} from "react-hot-toast/headless";
+import Input from "../inputs/Input";
 
-const RegisterModal = () => {
+const RegisterModalEmail = () => {
 
-    const registerModal = useRegisterModal();
+    const registerEmailModal = useRegisterEmailModal();
+    const registerPhoneModal = useRegisterPhoneModal();
     const [isLoading, setIsLoading] = useState(false);
 
     const {
@@ -45,7 +47,7 @@ const RegisterModal = () => {
             await ky.post('/api/register', { json: data }).json();
 
             toast.success('Registered!');
-            registerModal.onClose();
+            registerEmailModal.onClose();
         } catch (error) {
             toast.error("Something went wrong!");
         } finally {
@@ -53,13 +55,19 @@ const RegisterModal = () => {
         }
     }
 
+    const onToggle = useCallback(() => {
+        registerEmailModal.onClose();
+        registerPhoneModal.onOpen();
+    }, [registerEmailModal, registerPhoneModal]);
+
     const bodyContent = (
         <div className="flex flex-col gap-4">
             <Heading
                 title="Welcome to Room Roam !"
             />
-            <InputPhoneNumber id="phone" labelPhoneNumber="Phone Number" labelCountry="Country / Region" register={register} errors={errors} />
-            <Span content="We’ll call or text you to confirm your number. Standard message and data rates apply. " />
+            <Input id="email" label="Email" type="email" disabled={isLoading} register={register} errors={errors} required />
+            <Input id="password" label="Password" type="password" disabled={isLoading} register={register} errors={errors} required />
+            <Span content=""/>
         </div>
     )
 
@@ -92,13 +100,13 @@ const RegisterModal = () => {
                 outline
                 label="Continue with email"
                 icon={AiOutlineMail}
-                onClick={() => { }}
+                onClick={onToggle}
             />
             <div className="text-neutral-500 text-center mt-4 font-light">
                 <p>Already have an account?
                     <span
-                        onClick={registerModal.onClose}
-                        className="text-neutral-800 cursor-pointer hover:underline text-pyellow"
+                        onClick={registerEmailModal.onClose}
+                        className="cursor-pointer hover:underline text-pyellow"
                     > Log in</span>
                 </p>
             </div>
@@ -109,10 +117,10 @@ const RegisterModal = () => {
     return (
         <Modal
             disable={isLoading}
-            isOpen={registerModal.isOpen}
+            isOpen={registerEmailModal.isOpen}
             title="Login or Signup"
             actionLabel="Continue"
-            onClose={registerModal.onClose}
+            onClose={registerEmailModal.onClose}
             onSubmit={handleSubmit(onSubmit)}
             body={bodyContent}
             footer={footerContent}
@@ -120,4 +128,4 @@ const RegisterModal = () => {
     )
 };
 
-export default RegisterModal;
+export default RegisterModalEmail;

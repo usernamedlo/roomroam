@@ -10,7 +10,7 @@ const Span: React.FC<SpanProps> = ({
     return (
         <span className="text-pgray text-sm font-light mb-5">
             {content}
-            <a href="#" className="text-pyellow hover:underline">Terms of Service</a>
+            <a href="#" className="cursor-pointer hover:underline text-pyellow">Terms of Service</a>
         </span>
     )
 }

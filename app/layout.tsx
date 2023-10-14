@@ -4,7 +4,9 @@ import { Raleway } from "next/font/google";
 
 import Navbar from './components/navbar/Navbar'
 import ClientOnly from './components/ClientOnly';
-import RegisterModal from './components/modals/RegisterModal';
+
+import RegisterModalEmail from './components/modals/RegisterModalPhone';
+import RegisterModalPhone from './components/modals/RegisterModalEmail';
 import ToasterProvider from './providers/ToasterProvider';
 
 const raleway = Raleway({ subsets: ['latin'] })
@@ -24,7 +26,8 @@ export default function RootLayout({
       <body className={raleway.className}>
         <ClientOnly>
           <ToasterProvider />
-          <RegisterModal />
+          <RegisterModalEmail />
+          <RegisterModalPhone />
           <Navbar />
         </ClientOnly>
         {children}
