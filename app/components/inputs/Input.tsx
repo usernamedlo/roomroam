@@ -13,7 +13,7 @@ import { BiDollar } from "react-icons/bi";
 interface InputProps {
     id: string;
     label: string;
-    type?: string;
+    inputType?: 'default' | 'price' | 'phoneNumber';
     pattern?: string;
     disabled?: boolean;
     formatPrice?: boolean;
@@ -29,7 +29,7 @@ interface InputProps {
 const Input: React.FC<InputProps> = ({
     id,
     label,
-    type = "text",
+    inputType = 'default',
     pattern,
     disabled,
     formatPrice,
@@ -57,8 +57,8 @@ const Input: React.FC<InputProps> = ({
                 disabled={disabled}
                 {...register(id, { required })}
                 placeholder=" "
-                type={type}
-                pattern={type === "tel" ? pattern : undefined}
+                type={inputType === 'phoneNumber' ? 'tel' : 'text'}
+                pattern={pattern}
                 autoFocus={autoFocus}
                 ref={inputRef}
                 className={`
@@ -75,23 +75,22 @@ const Input: React.FC<InputProps> = ({
                     disabled:opacity-70
                     text-black
                     disabled:cursor-not-allowed
-                    ${formatPrice ? 'pl-9' : 'pl-4'}
+                    ${inputType === 'price' ? 'pl-9' : 'pl-4'}
                     ${errors[id] ? 'border-pyellow' : 'border-neutral-300'}
                     ${errors[id] ? 'focus:border-pyellow' : 'focus:border-black'}
-                    ${phoneNumber ? 'border-none' : ''}
+                    ${inputType === 'phoneNumber' ? 'border-none' : ''}
                     `} />
             <label
                 htmlFor={id}
                 className={`
                     absolute 
                     text-md
-                    duration-150 
                     transform 
                     -translate-y-3 
                     top-[1.30rem] 
                     z-10 
                     origin-[0] 
-                    ${formatPrice ? 'left-9' : 'left-4'}
+                    ${inputType === 'price' ? 'left-9' : 'left-4'}
                     peer-placeholder-shown:scale-100 
                     peer-placeholder-shown:translate-y-0 
                     peer-focus:scale-75

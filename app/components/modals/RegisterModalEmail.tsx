@@ -5,6 +5,7 @@ import { AiFillGithub } from "react-icons/ai";
 import { FcPhoneAndroid } from "react-icons/fc";
 import { FcGoogle } from "react-icons/fc";
 import { useCallback, useState } from "react";
+
 import {
     FieldValues,
     SubmitHandler,
@@ -41,6 +42,7 @@ const RegisterModalEmail = () => {
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
 
+        console.log("Function called");
         console.log(data);
 
         // setIsLoading(true);
@@ -65,7 +67,7 @@ const RegisterModalEmail = () => {
     const bodyContent = (
         <div className="flex flex-col gap-4">
             <Heading title="Welcome to Room Roam !"/>
-            <Input id="email" label="Email" disabled={isLoading} register={register} errors={errors} required  />
+            <Input id="email" label="Email" disabled={isLoading} register={register} errors={errors} required />
             {/* <Input id="name" label="Name" disabled={isLoading} register={register} errors={errors} required />
             <Input id="password" label="Password" type="password" disabled={isLoading} register={register} errors={errors} required /> */}
             <Span content="" />
