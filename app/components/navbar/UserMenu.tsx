@@ -1,15 +1,27 @@
 "use client";
-import { useEffect, useRef } from "react";
+
+import React, { useEffect, useRef, useCallback, useState } from "react";
+
+import { User } from "@prisma/client";
+import { signOut } from "next-auth/react";
+
 import { AiOutlineMenu } from "react-icons/ai";
+
 import Avatar from "../Avatar";
 import MenuItem from "./MenuItem";
-import useRegisterEmailModal from "@/app/hooks/useRegisterModalEmail";
+import useRegisterEmailModal from "@/app/hooks/useRegisterEmailModal";
+import useLoginEmailModal from "@/app/hooks/useLoginEmailModal";
+import { toast } from "react-hot-toast";
 
-import { useCallback, useState } from 'react';
+interface UserMenuProps {
+    currentUser?: User | null;
+}
 
-const UserMenu = () => {
-
+const UserMenu: React.FC<UserMenuProps> = ({
+    currentUser
+}) => {
     const registerEmailModal = useRegisterEmailModal();
+    const loginEmailModal = useLoginEmailModal();
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleOpen = useCallback(() => {
@@ -61,13 +73,25 @@ const UserMenu = () => {
                     ref={menuRef}
                     className="absolute rounded-xl border-2 shadow-lg w-[50vw] md:w-[30vw] lg:w-2/3 bg-white overflow-hidden lg:right-1 top-16 lg:top-14">
                     <div className="flex flex-col cursor-pointer">
-                        <>
-                            <MenuItem onClick={registerEmailModal.onOpen} label="Sign up" />
-                            <MenuItem onClick={() => { }} label="Login" />
-                            <MenuItem onClick={() => { }} label="Help Center" />
-                        </>
+                        {currentUser ? (
+                            <>
+                                <MenuItem onClick={() => { }} label="Profile" />
+                                <MenuItem onClick={() => { }} label="Trips" />
+                                <MenuItem onClick={() => { }} label="Saved" />
+                                <hr className="border-neutral-200" />
+                                <MenuItem onClick={() => {
+                                    signOut()
+                                    toast.success("Logged out successfully.")
+                                }} label="Log out" />
+                            </>) : (
+                            <>
+                                <MenuItem onClick={registerEmailModal.onOpen} label="Sign up" />
+                                <MenuItem onClick={loginEmailModal.onOpen} label="Login" />
+                                <hr className="border-neutral-200" />
+                                <MenuItem onClick={() => { }} label="Help Center" />
+                            </>)}
                     </div>
-                </div >
+                </div>
             )}
         </div >
     )

@@ -5,9 +5,11 @@ import { Raleway } from "next/font/google";
 import Navbar from './components/navbar/Navbar'
 import ClientOnly from './components/ClientOnly';
 
-import RegisterModalEmail from './components/modals/RegisterModalPhone';
-import RegisterModalPhone from './components/modals/RegisterModalEmail';
+import RegisterPhoneModal from './components/modals/RegisterPhoneModal';
+import RegisterEmailModal from './components/modals/RegisterEmailModal';
+import LoginEmailModal from './components/modals/LoginEmailModal';
 import ToasterProvider from './providers/ToasterProvider';
+import getCurrentUser from './actions/getCurrentUser';
 
 const raleway = Raleway({ subsets: ['latin'] })
 
@@ -16,19 +18,23 @@ export const metadata: Metadata = {
   description: 'Room Roam is website for finding hotel rooms.',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+
+  const currentUser = await getCurrentUser();
+
   return (
     <html lang="en">
       <body className={raleway.className}>
         <ClientOnly>
           <ToasterProvider />
-          <RegisterModalEmail />
-          <RegisterModalPhone />
-          <Navbar />
+          <RegisterPhoneModal />
+          <RegisterEmailModal />
+          <LoginEmailModal />
+          <Navbar currentUser={currentUser} />
         </ClientOnly>
         {children}
       </body>

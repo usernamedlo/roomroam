@@ -64,6 +64,8 @@ const InputPhoneNumber: React.FC<InputPhoneNumberProps> = ({
         }
     }, [autoFocus]);
 
+    const { ref, ...rest } = register(id, { required });
+
     return (
         <div className="flex flex-col border-2 rounded-md">
 
@@ -97,19 +99,7 @@ const InputPhoneNumber: React.FC<InputPhoneNumberProps> = ({
                         px-3">
                     {selectedDialCode}</span>
 
-                <Input
-                    id={id}
-                    label={label}
-                    phoneNumber={true}
-                    type={type}
-                    pattern={pattern}
-                    disabled={disabled}
-                    formatPrice={formatPrice}
-                    register={register}
-                    required={required}
-                    errors={errors}
-                    autoFocus={true}
-                />
+                <Input id="phone" label='Phone Number' inputType={type} pattern={pattern} disabled={disabled} formatPrice={formatPrice} register={register} errors={errors} required autoFocus={autoFocus} />
             </div>
         </div>
     );
