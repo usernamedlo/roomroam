@@ -41,22 +41,17 @@ const RegisterModalEmail = () => {
     });
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
+        setIsLoading(true);
+        try {
+            ky.post('/api/register', { json: data }).json();
 
-        console.log("Function called");
-        console.log(data);
-
-        // setIsLoading(true);
-
-        // try {
-        //     ky.post('/api/register', { json: data }).json();
-
-        //     toast.success('Registered!');
-        //     registerEmailModal.onClose();
-        // } catch (error) {
-        //     toast.error("Something went wrong!");
-        // } finally {
-        //     setIsLoading(false);
-        // }
+            toast.success('Registered!');
+            registerEmailModal.onClose();
+        } catch (error) {
+            toast.error("Something went wrong!");
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     const onToggle = useCallback(() => {
@@ -66,10 +61,10 @@ const RegisterModalEmail = () => {
 
     const bodyContent = (
         <div className="flex flex-col gap-4">
-            <Heading title="Welcome to Room Roam !"/>
-            <Input id="email" label="Email" disabled={isLoading} register={register} errors={errors} required />
-            {/* <Input id="name" label="Name" disabled={isLoading} register={register} errors={errors} required />
-            <Input id="password" label="Password" type="password" disabled={isLoading} register={register} errors={errors} required /> */}
+            <Heading title="Welcome to Room Roam !" />
+            <Input id="email" label="Email" inputType="email" disabled={isLoading} register={register} errors={errors} required />
+            <Input id="name" label="Name" disabled={isLoading} register={register} errors={errors} required />
+            <Input id="password" label="Password" inputType="password" disabled={isLoading} register={register} errors={errors} required />
             <Span content="" />
         </div>
     )

@@ -12,16 +12,16 @@ function classNames(...classes : any) : string {
 
 const NavigationMenu = () => {
     return (
-        <div className="hidden md:flex md:flex-row space-y-2 md:space-y-0 md:space-x-4">
+        <div className="hidden lg:flex md:flex-row md:space-x-2">
             {navigation.map((item) => (
                 <a
                     key={item.name}
                     href={item.href}
                     className={classNames(
                         item.current
-                            ? "text-black"
-                            : "text-gray-300 hover:text-black",
-                        "rounded-md text-sm md:text-lg font-semibold px-2 py-1 md:px-4 md:py-2"
+                            ? "text-pyellow"
+                            : "text-gray-400 hover:text-black",
+                        "text-sm md:text-xl font-semibold px-2 py-1 md:px-4 md:py-2"
                     )}
                     aria-current={item.current ? "page" : undefined}
                 >
