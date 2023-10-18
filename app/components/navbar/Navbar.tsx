@@ -2,22 +2,23 @@
 
 import React from "react";
 import Container from "../Container";
-import { User } from "@prisma/client";
+import Banner from "./Banner";
 
 import Logo from "./Logo";
 import NavigationMenu from "./NavigationMenu";
 import UserMenu from "./UserMenu";
+import { SafeUser } from "@/app/types";
 
 interface NavbarProps {
-    currentUser?: User | null;
+    currentUser?: SafeUser | null;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ 
     currentUser 
 }) => {
     return (
-        <div className="fixed w-full bg-white z-10 shadow-sm">
-            <div className="py-4 border-b-[1px]">
+        <div className="fixed w-full top-0 bg-white z-10 shadow-sm">
+            <div className="py-4 border-b-[2px]">
                 <Container>
                     <div className="flex flex-row items-center justify-between md:gap-0">
                         <Logo />
@@ -26,6 +27,7 @@ const Navbar: React.FC<NavbarProps> = ({
                     </div>
                 </Container>
             </div>
+            <Banner />
         </div>
     );
 }

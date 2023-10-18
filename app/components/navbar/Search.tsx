@@ -1,5 +1,3 @@
-"use client";
-
 import { BiSearch } from "react-icons/bi";
 
 const Search = () => {
@@ -7,27 +5,36 @@ const Search = () => {
     return (
         <div
             className="
-            border-[1px]
-            w-full
+            bg-white
+            border
+            mx-auto
             md:w-auto
-            py-2
+            py-3
+            px-4
             rounded-full
-            shadow-sm
-            hover:shadow-md
+            shadow-md
+            hover:shadow-lg
             transition
             cursor-pointer">
-            <div className="flex flex-row items-center justify-between">
-                <div className="text-sm font-semibold px-6">
-                    Anywhere
+            <div className="text-base flex flex-row items-center font-medium">
+                <div className="px-8 flex flex-col">
+                    <span className="text-black">Location</span>
+                    <span className="text-neutral-400 text-sm">Which city do you prefer?</span>
                 </div>
-                <div className="hidden sm:block text-sm font-semibold px-6 border-x-[1px] flex-1 text-center">
-                    Any Week
+                <div className="px-8 flex flex-col border-l border-r">
+                    <span className="text-black">Check In</span>
+                    <span className="text-neutral-400 text-sm">Add Dates</span>
                 </div>
-                <div className="text-sm pl-6 pr-2 text-gray-600 flex flex-row items-center gap-3">
-                    <div className="hidden sm:block">Add Guests</div>
-                    <div className="p-2 bg-pyellow rounded-full text-white">
-                        <BiSearch size={18} />
-                    </div>
+                <div className="px-8 flex flex-col border-r">
+                    <span className="text-black">Check Out</span>
+                    <span className="text-neutral-400 text-sm">Add Dates</span>
+                </div>
+                <div className="px-8 flex flex-col">
+                    <span className="text-black">Guests</span>
+                    <span className="text-neutral-400 text-sm">Add Guests</span>
+                </div>
+                <div className="p-5 bg-pyellow rounded-full text-white">
+                    <BiSearch size={30} />
                 </div>
             </div>
         </div>
@@ -35,4 +42,3 @@ const Search = () => {
 };
 
 export default Search;
-

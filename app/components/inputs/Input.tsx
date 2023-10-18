@@ -1,13 +1,14 @@
 'use client';
 
-import { useRef, useEffect } from "react";
-
+import { useRef, useEffect, useState } from "react";
 
 import {
     FieldErrors,
     FieldValues,
     UseFormRegister
 } from "react-hook-form";
+
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { BiDollar } from "react-icons/bi";
 
 interface InputProps {
@@ -50,6 +51,11 @@ const Input: React.FC<InputProps> = ({
     }, [autoFocus]);
 
     const { ref, ...rest } = register(id, { required });
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleTogglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     return (
         <div className="w-full relative">
@@ -59,7 +65,7 @@ const Input: React.FC<InputProps> = ({
                 disabled={disabled}
                 {...register(id, { required })}
                 placeholder=" "
-                type={inputType}
+                type={inputType === 'password' ? (showPassword ? 'text' : 'password') : inputType}
                 pattern={pattern}
                 autoFocus={autoFocus}
                 ref={(e) => {
@@ -72,6 +78,13 @@ const Input: React.FC<InputProps> = ({
                             ${errors[id] ? 'border-pyellow' : 'border-neutral-300'} 
                             ${errors[id] ? 'focus:border-pyellow' : 'focus:border-black'} 
                             ${inputType === 'phoneNumber' ? 'border-none' : ''} `} />
+            {inputType === 'password' && (
+                <div
+                    onClick={handleTogglePasswordVisibility}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer">
+                    {showPassword ? <FaEye size={20} /> : <FaEyeSlash size={20} />}
+                </div>
+            )}
             <label
                 htmlFor={id}
                 className={`absolute text-md transform -translate-y-3 top-[1.30rem] z-10 origin-[0] duration-150 

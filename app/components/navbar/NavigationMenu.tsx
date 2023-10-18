@@ -12,7 +12,7 @@ function classNames(...classes : any) : string {
 
 const NavigationMenu = () => {
     return (
-        <div className="hidden lg:flex md:flex-row md:space-x-2">
+        <div className="hidden lg:flex lg:justify-around md:flex-row  md:space-x-2">
             {navigation.map((item) => (
                 <a
                     key={item.name}

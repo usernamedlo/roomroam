@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useCallback, useState } from "react";
 
-import { User } from "@prisma/client";
 import { signOut } from "next-auth/react";
 
 import { AiOutlineMenu } from "react-icons/ai";
@@ -12,9 +11,10 @@ import MenuItem from "./MenuItem";
 import useRegisterEmailModal from "@/app/hooks/useRegisterEmailModal";
 import useLoginEmailModal from "@/app/hooks/useLoginEmailModal";
 import { toast } from "react-hot-toast";
+import { SafeUser } from "@/app/types";
 
 interface UserMenuProps {
-    currentUser?: User | null;
+    currentUser?: SafeUser | null;
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({
@@ -63,7 +63,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
                     className="p-5 lg:py-2 lg:px-3 border-[1px] border-neutral-200 flex flex-row items-center gap-4 rounded-full cursor-pointer hover:shadow-md transition">
                     <AiOutlineMenu />
                     <div className="hidden lg:block">
-                        <Avatar src={""} />
+                        <Avatar src={currentUser?.image} />
                     </div>
                 </div>
             </div>
@@ -71,24 +71,35 @@ const UserMenu: React.FC<UserMenuProps> = ({
             {isOpen && (
                 <div
                     ref={menuRef}
-                    className="absolute rounded-xl border-2 shadow-lg w-[50vw] md:w-[30vw] lg:w-2/3 bg-white overflow-hidden lg:right-1 top-16 lg:top-14">
+                    className="absolute rounded-xl border shadow-lg w-[50vw] md:w-[30vw] lg:w-2/3 bg-white overflow-hidden lg:right-1 top-16 lg:top-14">
                     <div className="flex flex-col cursor-pointer">
                         {currentUser ? (
                             <>
-                                <MenuItem onClick={() => { }} label="Profile" />
-                                <MenuItem onClick={() => { }} label="Trips" />
-                                <MenuItem onClick={() => { }} label="Saved" />
+                                <div className="font-semibold my-2">
+                                    <MenuItem onClick={() => { }} label="Message" />
+                                    <MenuItem onClick={() => { }} label="Notifications" />
+                                    <MenuItem onClick={() => { }} label="Reservations" />
+                                    <MenuItem onClick={() => { }} label="Wishlists" />
+                                </div>
                                 <hr className="border-neutral-200" />
-                                <MenuItem onClick={() => {
-                                    signOut()
-                                    toast.success("Logged out successfully.")
-                                }} label="Log out" />
+                                <div className="font-medium my-2">
+                                    <MenuItem onClick={() => { }} label="Account" />
+                                    <MenuItem onClick={() => { }} label="Help Center" />
+                                    <MenuItem onClick={() => {
+                                        signOut()
+                                        toast.success("Logged out successfully.")
+                                    }} label="Log out" />
+                                </div>
                             </>) : (
                             <>
-                                <MenuItem onClick={registerEmailModal.onOpen} label="Sign up" />
-                                <MenuItem onClick={loginEmailModal.onOpen} label="Login" />
+                                <div className="font-semibold my-2">
+                                    <MenuItem onClick={registerEmailModal.onOpen} label="Sign up" />
+                                    <MenuItem onClick={loginEmailModal.onOpen} label="Login" />
+                                </div>
                                 <hr className="border-neutral-200" />
-                                <MenuItem onClick={() => { }} label="Help Center" />
+                                <div className="font-medium my-2">
+                                    <MenuItem onClick={() => { }} label="Help Center" />
+                                </div>
                             </>)}
                     </div>
                 </div>

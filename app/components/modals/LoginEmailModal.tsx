@@ -66,7 +66,7 @@ const LoginModal = () => {
     }, [loginEmailModal, registerEmailModal])
 
     const SOCIAL_BUTTONS = [
-        { key: "facebook", label: "Continue with Facebook", src: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png", onClick: () => { signIn('facebook') } },
+        { key: "facebook", label: "Continue with Facebook", src: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Facebook_logo_%28square%29.png", onClick: () => { { alert("WIP") } } },
         { key: "google", label: "Continue with Google", icon: FcGoogle, onClick: () => { signIn('google') } },
         { key: "github", label: "Continue with Github", icon: AiFillGithub, onClick: () => { signIn('github') } },
     ];
