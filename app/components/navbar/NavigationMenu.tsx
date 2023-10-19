@@ -21,7 +21,7 @@ const NavigationMenu = () => {
                         item.current
                             ? "text-pyellow"
                             : "text-gray-400 hover:text-black",
-                        "text-sm md:text-xl font-semibold px-2 py-1 md:px-4 md:py-2"
+                        "text-sm md:text-lg font-medium px-2 py-1 md:px-4 md:py-2"
                     )}
                     aria-current={item.current ? "page" : undefined}
                 >

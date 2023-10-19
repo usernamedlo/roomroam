@@ -51,17 +51,17 @@ const UserMenu: React.FC<UserMenuProps> = ({
 
     return (
         <div className="relative">
-            <div className="flex flex-row items-center gap-2">
+            <div className="flex flex-row items-center gap-4">
                 <div
                     onClick={() => { }}
-                    className="hidden lg:block text-md font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer">
+                    className="hidden lg:block text-md font-medium py-3 px-3 rounded-full hover:bg-neutral-100 transition cursor-pointer">
                     Become a host
                 </div>
                 <div
                     ref={toggleButtonRef}
                     onClick={toggleOpen}
                     className="p-5 lg:py-2 lg:px-3 border-[1px] border-neutral-200 flex flex-row items-center gap-4 rounded-full cursor-pointer hover:shadow-md transition">
-                    <AiOutlineMenu />
+                    <AiOutlineMenu size={20} />
                     <div className="hidden lg:block">
                         <Avatar src={currentUser?.image} />
                     </div>

@@ -8,7 +8,6 @@ import ClientOnly from './components/ClientOnly';
 import RegisterPhoneModal from './components/modals/RegisterPhoneModal';
 import RegisterEmailModal from './components/modals/RegisterEmailModal';
 import LoginEmailModal from './components/modals/LoginEmailModal';
-import Banner from '@/app/components/navbar/Banner';
 
 import ToasterProvider from './providers/ToasterProvider';
 import getCurrentUser from './actions/getCurrentUser';
