@@ -11,6 +11,7 @@ import LoginEmailModal from './components/modals/LoginEmailModal';
 
 import ToasterProvider from './providers/ToasterProvider';
 import getCurrentUser from './actions/getCurrentUser';
+import HostModal from './components/modals/HostModal';
 
 const raleway = Raleway({ subsets: ['latin'] })
 
@@ -35,6 +36,7 @@ export default async function RootLayout({
           <RegisterPhoneModal />
           <RegisterEmailModal />
           <LoginEmailModal />
+          <HostModal />
           <Navbar currentUser={currentUser} />
         </ClientOnly>
         {children}

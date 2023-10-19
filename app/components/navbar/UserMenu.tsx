@@ -8,8 +8,11 @@ import { AiOutlineMenu } from "react-icons/ai";
 
 import Avatar from "../Avatar";
 import MenuItem from "./MenuItem";
+
 import useRegisterEmailModal from "@/app/hooks/useRegisterEmailModal";
 import useLoginEmailModal from "@/app/hooks/useLoginEmailModal";
+import useHostModal from "@/app/hooks/useHostModal";
+
 import { toast } from "react-hot-toast";
 import { SafeUser } from "@/app/types";
 
@@ -22,11 +25,20 @@ const UserMenu: React.FC<UserMenuProps> = ({
 }) => {
     const registerEmailModal = useRegisterEmailModal();
     const loginEmailModal = useLoginEmailModal();
+    const hostModal = useHostModal();
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleOpen = useCallback(() => {
         setIsOpen((value) => !value);
     }, []);
+
+    const onHost = useCallback(() => {
+        if (!currentUser) {
+            return loginEmailModal.onOpen();
+        }
+
+        hostModal.onOpen();
+    }, [currentUser, loginEmailModal, hostModal]);
 
     const handleClickOutside = useCallback((event: Event) => {
         if (toggleButtonRef.current && toggleButtonRef.current.contains(event.target as Node)) {
@@ -53,7 +65,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
         <div className="relative">
             <div className="flex flex-row items-center gap-4">
                 <div
-                    onClick={() => { }}
+                    onClick={onHost}
                     className="hidden lg:block text-md font-medium py-3 px-3 rounded-full hover:bg-neutral-100 transition cursor-pointer">
                     Become a host
                 </div>
@@ -80,6 +92,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
                                     <MenuItem onClick={() => { }} label="Notifications" />
                                     <MenuItem onClick={() => { }} label="Reservations" />
                                     <MenuItem onClick={() => { }} label="Wishlists" />
+                                    <MenuItem onClick={onHost} label="Become a host" />
                                 </div>
                                 <hr className="border-neutral-200" />
                                 <div className="font-medium my-2">

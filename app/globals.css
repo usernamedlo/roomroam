@@ -17,3 +17,10 @@ select.peer {
   background-repeat: no-repeat;
   background-position: right 10px center;
 }
+
+.leaflet-bottom,
+.leaflet-control,
+.leaflet-pane,
+.leaflet-top {
+  z-index: 0 !important;
+}
