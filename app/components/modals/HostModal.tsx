@@ -1,16 +1,26 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useForm, FieldValues } from "react-hook-form";
+import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+
+import ky from "ky";
 
 import useHostModal from "@/app/hooks/useHostModal";
 import CountrySelect from "@/app/components/inputs/CountrySelect";
+import ImageUpload from "@/app/components/inputs/ImageUpload";
 import { categories } from "@/app/components/navbar/SearchMenu";
+
+import Counter from "../inputs/Counter";
+import Input from "../inputs/Input";
 import CategoryInput from "../inputs/CategoryInput";
+
 import Heading from "../Heading";
 import Modal from "./Modal";
 
 import dynamic from "next/dynamic";
+
 
 
 enum STEPS {
@@ -23,10 +33,11 @@ enum STEPS {
 }
 
 const BookModal = () => {
-
+    const router = useRouter();
     const hostModal = useHostModal();
 
     const [step, setStep] = useState(STEPS.CATERGORY);
+    const [isLoading, setIsLoading] = useState(false);
 
     const {
         register,
@@ -51,6 +62,10 @@ const BookModal = () => {
 
     const category = watch('category');
     const location = watch('location');
+    const guestCount = watch('guestCount');
+    const roomCount = watch('roomCount');
+    const bathroomCount = watch('bathroomCount');
+    const imageSrc = watch('imageSrc');
 
     const Map = useMemo(() => dynamic(() => import('../Map'), {
         ssr: false
@@ -71,6 +86,30 @@ const BookModal = () => {
     const onNext = () => {
         setStep((value) => value + 1);
     };
+
+    const submit: SubmitHandler<FieldValues> = (data) => {
+        if (step != STEPS.PRICE) {
+            return onNext();
+        }
+
+        setIsLoading(true);
+
+        ky.post('/api/listings', { json: data })
+            .json()
+            .then((data) => {
+                toast.success('Listing created!');
+                router.refresh();
+                reset();
+                setStep(STEPS.CATERGORY);
+                hostModal.onClose();
+            })
+            .catch((err) => {
+                toast.error("Something went wrong!");
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
+    }
 
     const actionLabel = useMemo(() => {
         if (step === STEPS.PRICE) {
@@ -115,6 +154,7 @@ const BookModal = () => {
                     </div>
                 ))}
             </div>
+            <hr />
         </div>
     )
 
@@ -130,67 +170,107 @@ const BookModal = () => {
                     onChange={(value) => setCustomValue('location', value)}
                 />
                 <Map center={location?.latlng} />
+                <hr />
             </div>
         );
     }
 
     if (step === STEPS.INFO) {
         bodyContent = (
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-4">
                 <Heading
-                    title="How many guests can your place accommodate?"
-                    subtitle="Guests won't see this"
+                    title="Share some basics about your place"
+                    subtitle="What amenitis do you have?"
                 />
-                <div className="flex flex-col gap-4">
-                    <label htmlFor="guestCount">Guests</label>
-                    <input
-                        id="guestCount"
-                        type="number"
-                        {...register('guestCount', {
-                            required: true,
-                            min: 1,
-                        })}
-                    />
-                    {errors.guestCount && (
-                        <span className="text-red-500">
-                            This field is required
-                        </span>
-                    )}
-                </div>
-                <div className="flex flex-col gap-4">
-                    <label htmlFor="roomCount">Rooms</label>
-                    <input
-                        id="roomCount"
-                        type="number"
-                        {...register('roomCount', {
-                            required: true,
-                            min: 1,
-                        })}
-                    />
-                    {errors.roomCount && (
-                        <span className="text-red-500">
-                            This field is required
-                        </span>
-                    )}
-                </div>
-                <div className="flex flex-col gap-4">
-                    <label htmlFor="bathroomCount">Bathrooms</label>
-                    <input
-                        id="bathroomCount"
-                        type="number"
-                        {...register('bathroomCount', {
-                            required: true,
-                            min: 1,
-                        })}
-                    />
-                    {errors.bathroomCount && (
-                        <span className="text-red-500">
-                            This field is required
-                        </span>
-                    )}
-                </div>
+                <Counter
+                    onChange={(value) => setCustomValue('guestCount', value)}
+                    value={guestCount}
+                    title="Guests"
+                    subtitle="How many guests do you allow?"
+                />
+                <hr />
+                <Counter
+                    onChange={(value) => setCustomValue('roomCount', value)}
+                    value={roomCount}
+                    title="Rooms"
+                    subtitle="How many rooms do you have?"
+                />
+                <hr />
+                <Counter
+                    onChange={(value) => setCustomValue('bathroomCount', value)}
+                    value={bathroomCount}
+                    title="Bathrooms"
+                    subtitle="How many bathrooms do you have?"
+                />
+                <hr />
+            </div>
+        )
+    }
+
+    if (step === STEPS.IMAGES) {
+        bodyContent = (
+            <div className="flex flex-col gap-4">
+                <Heading
+                    title="Upload some images of your place"
+                    subtitle="Showcase your place!"
+                />
+                <ImageUpload
+                    onChange={(value) => setCustomValue('imageSrc', value)}
+                    value={imageSrc} />
+                <hr />
             </div>
         );
+    }
+
+    if (step === STEPS.DESCRIPTION) {
+        bodyContent = (
+            <div className="flex flex-col gap-4">
+                <Heading
+                    title="How would you describe your place?"
+                    subtitle="Short and sweet works best!"
+                />
+                <Input
+                    id="title"
+                    label="Title"
+                    disabled={isLoading}
+                    register={register}
+                    errors={errors}
+                    required
+                />
+                <hr />
+                <Input
+                    id="description"
+                    label="Description"
+                    disabled={isLoading}
+                    register={register}
+                    errors={errors}
+                    required
+                />
+                <hr />
+            </div>
+        )
+    }
+
+    if (step === STEPS.PRICE) {
+        bodyContent = (
+            <div className="flex flex-col gap-4">
+                <Heading
+                    title="Now, set your price"
+                    subtitle="How much do you charge per night?"
+                />
+                <Input
+                    id="price"
+                    label="Price"
+                    formatPrice
+                    inputType="number"
+                    disabled={isLoading}
+                    register={register}
+                    errors={errors}
+                    required
+                />
+                <hr />
+            </div>
+        )
     }
 
 
@@ -198,7 +278,7 @@ const BookModal = () => {
         <Modal
             isOpen={hostModal.isOpen}
             onClose={hostModal.onClose}
-            onSubmit={onNext}
+            onSubmit={handleSubmit(submit)}
             actionLabel={actionLabel}
             secondaryActionLabel={secondaryActionLabel}
             secondaryAction={step === STEPS.CATERGORY ? undefined : onBack}
