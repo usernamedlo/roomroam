@@ -2,7 +2,6 @@
 
 import React from "react";
 import Container from "../Container";
-import Banner from "./Banner";
 
 import Logo from "./Logo";
 import NavigationMenu from "./NavigationMenu";
@@ -27,7 +26,6 @@ const Navbar: React.FC<NavbarProps> = ({
                     </div>
                 </Container>
             </div>
-            <Banner />
         </div>
     );
 }

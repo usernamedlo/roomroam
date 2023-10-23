@@ -9,6 +9,8 @@ import RegisterPhoneModal from './components/modals/RegisterPhoneModal';
 import RegisterEmailModal from './components/modals/RegisterEmailModal';
 import LoginEmailModal from './components/modals/LoginEmailModal';
 
+import Banner from './components/Banner';
+
 import ToasterProvider from './providers/ToasterProvider';
 import getCurrentUser from './actions/getCurrentUser';
 import HostModal from './components/modals/HostModal';
@@ -39,7 +41,10 @@ export default async function RootLayout({
           <HostModal />
           <Navbar currentUser={currentUser} />
         </ClientOnly>
-        {children}
+        <div className="pb-20 pt-[5rem]">
+          <Banner />
+          {children}
+        </div>
       </body>
     </html>
   )
