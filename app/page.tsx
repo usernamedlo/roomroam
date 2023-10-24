@@ -6,6 +6,7 @@ import NearbyListings from "./components/listings/NearbyListings";
 
 import getListings from "./actions/getListings";
 import getCurrentUser from "./actions/getCurrentUser";
+import Banner from "./components/Banner";
 
 export default async function Home() {
 
@@ -22,6 +23,7 @@ export default async function Home() {
 
   return (
     <ClientOnly>
+      <Banner />
       <Container>
         <LatestListings listings={listings} currentUser={currentUser} />
         <NearbyListings listings={listings} currentUser={currentUser} />
