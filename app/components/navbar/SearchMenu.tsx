@@ -56,9 +56,11 @@ export const categories = [
   }
 ]
 
+const refs = categories.map(() => React.createRef<HTMLButtonElement>());
+
 const SearchMenu: React.FC<SearchMenuProps> = () => {
   const [activeBuildingType, setActiveBuildingType] = useState(categories[0].label);
-  const refs = Array(categories.length).fill(0).map(() => useRef<HTMLButtonElement>(null));
+
   const [indicatorStyle, setIndicatorStyle] = useState({ left: '0%', width: '0%' });
 
   const handleClick = useCallback((type: string, index: number) => {
