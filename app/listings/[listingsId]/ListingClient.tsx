@@ -6,7 +6,6 @@ import { useMemo, useState, useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { eachDayOfInterval, differenceInCalendarDays } from "date-fns";
 import { Range } from "react-date-range";
-import { Reservation } from "@prisma/client";
 import { toast } from "react-hot-toast";
 
 import Container from "@/app/components/Container";
@@ -17,7 +16,7 @@ import ListingReservation from "@/app/components/listings/ListingReservation";
 
 import useLoginEmailModal from "@/app/hooks/useLoginEmailModal";
 
-import { SafeListing, SafeUser } from "@/app/types";
+import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
 
 
 
@@ -28,7 +27,7 @@ const initialDateRange = {
 };
 
 interface ListingClientProps {
-    reservations?: Reservation[];
+    reservations?: SafeReservation[],
     listing: SafeListing & {
         user: SafeUser;
     };
@@ -74,18 +73,21 @@ const ListingClient: React.FC<ListingClientProps> = ({
         setIsLoading(true);
 
         ky.post('/api/reservations', {
-            totalPrice,
-            startDate: dateRange.startDate,
-            endDate: dateRange.endDate,
-            listingId: listing?.id
+            json: {
+                totalPrice,
+                startDate: dateRange.startDate,
+                endDate: dateRange.endDate,
+                listingId: listing?.id
+            }
         })
-            .then(() => {
-                toast.success('Listing reserved!');
+            .json()
+            .then((data) => {
+                toast.success('Reservation created!');
                 setDateRange(initialDateRange);
                 router.push('/trips');
             })
-            .catch(() => {
-                toast.error('Something went wrong.');
+            .catch((err) => {
+                toast.error(err.message);
             })
             .finally(() => {
                 setIsLoading(false);

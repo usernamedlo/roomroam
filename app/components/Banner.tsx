@@ -16,7 +16,7 @@ const Banner = () => {
     return (
         <div className="hidden bg-[#EFF0F2] h-[41rem] w-full lg:flex flex-col justify-end">
             <div className="mx-auto my-16">
-                <Image src={randomImage} alt="Random Illustration" className="w-[35rem] my-3 mx-auto" />
+                <Image src={randomImage} alt="Random Illustration" width={560} height={560} className="w-[35rem] my-3 mx-auto" />
                 <div className="flex flex-row justify-start mx-6 my-4 gap-5 items-start">
                     <h3 className=" text-pyellow text-5xl font-bold">Find</h3>
                     <SearchMenu />
