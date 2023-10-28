@@ -95,6 +95,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
                                     <MenuItem onClick={() => { }} label="Message" />
                                     <MenuItem onClick={() => router.push('/properties')} label="My properties" />
                                     <MenuItem onClick={() => router.push('/favorites')} label="Favorites" />
+                                    <span className="block lg:hidden"><MenuItem onClick={onHost} label="Become a host" /></span>
                                     <MenuItem onClick={() => router.push('/trips')} label="My trips" />
                                     <MenuItem onClick={() => router.push('/reservations')} label="My reservations" />
                                     <MenuItem onClick={() => { }} label="Wishlists" />
