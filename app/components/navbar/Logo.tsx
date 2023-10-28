@@ -13,7 +13,7 @@ const Logo = () => {
             className="hidden lg:block cursor-pointer"
             height="150"
             width="150"
-            src="/images/logo.png"
+            src="/images/Logo.png"
         />
     )
 };
