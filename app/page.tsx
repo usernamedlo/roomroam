@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import ClientOnly from "./components/ClientOnly";
 import Container from "./components/Container";
 import EmptyState from "./components/EmptyState";
@@ -10,9 +12,9 @@ import getListingsLocations from "./actions/getListingsLocations";
 import getCurrentUser from "./actions/getCurrentUser";
 import Banner from "./components/Banner";
 
-interface HomeProps{
+interface HomeProps {
   searchParams: IListingsParams
-}
+};
 
 const Home = async ({ searchParams }: HomeProps) => {
 
