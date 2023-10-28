@@ -5,14 +5,18 @@ import LatestListings from "./components/listings/LatestListings";
 import NearbyListings from "./components/listings/NearbyListings";
 import TopRatedListings from "./components/listings/TopRatedListings";
 
-import getListings from "./actions/getListings";
+import getListings, { IListingsParams } from "./actions/getListings";
 import getListingsLocations from "./actions/getListingsLocations";
 import getCurrentUser from "./actions/getCurrentUser";
 import Banner from "./components/Banner";
 
-export default async function Home() {
+interface HomeProps{
+  searchParams: IListingsParams
+}
 
-  const listings = await getListings();
+const Home = async ({ searchParams }: HomeProps) => {
+
+  const listings = await getListings(searchParams);
   const listingsLocations = await getListingsLocations();
   const currentUser = await getCurrentUser();
 
@@ -35,3 +39,5 @@ export default async function Home() {
     </ClientOnly>
   )
 }
+
+export default Home;

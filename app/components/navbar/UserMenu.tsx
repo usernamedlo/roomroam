@@ -93,10 +93,11 @@ const UserMenu: React.FC<UserMenuProps> = ({
                             <>
                                 <div className="font-semibold my-2">
                                     <MenuItem onClick={() => { }} label="Message" />
-                                    <MenuItem onClick={() => { }} label="Notifications" />
-                                    <MenuItem onClick={() => router.push('/trips')} label="Reservations" />
+                                    <MenuItem onClick={() => router.push('/properties')} label="My properties" />
+                                    <MenuItem onClick={() => router.push('/favorites')} label="Favorites" />
+                                    <MenuItem onClick={() => router.push('/trips')} label="My trips" />
+                                    <MenuItem onClick={() => router.push('/reservations')} label="My reservations" />
                                     <MenuItem onClick={() => { }} label="Wishlists" />
-                                    <MenuItem onClick={onHost} label="Become a host" />
                                 </div>
                                 <hr className="border-neutral-200" />
                                 <div className="font-medium my-2">

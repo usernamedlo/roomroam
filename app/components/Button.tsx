@@ -45,7 +45,7 @@ const Button: React.FC<ButtonProps> = ({
         ${small ? 'py-1' : 'py-3'}
         ${small ? 'font-light' : 'font-semibold'}
         ${small ? 'border-[1px]' : 'border-2'}`}>
-        {Image && (<NextImage src={Image} alt="icon" className="absolute left-4 top-3 w-6" />)}
+        {Image && (<NextImage src={Image} width={24} height={24} alt="icon" className="absolute left-4 top-3 w-6" />)}
         {Icon && (<Icon size={24} className="absolute left-4 top-3" />)}
         {label}
         </button>
