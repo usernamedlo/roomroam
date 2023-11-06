@@ -36,7 +36,7 @@ const Home = async ({ searchParams }: HomeProps) => {
       <Container>
         <LatestListings listings={listings} currentUser={currentUser} />
         <NearbyListings listings={listingsLocations} currentUser={currentUser} />
-        <TopRatedListings listings={listings} currentUser={currentUser} />
+        {/* <TopRatedListings listings={listings} currentUser={currentUser} /> */}
       </Container>
     </ClientOnly>
   )

@@ -13,6 +13,8 @@ import ToasterProvider from './providers/ToasterProvider';
 import getCurrentUser from './actions/getCurrentUser';
 import HostModal from './components/modals/HostModal';
 
+import Footer from './components/footer/Footer';
+
 const raleway = Raleway({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -42,6 +44,7 @@ export default async function RootLayout({
         <div className="pb-20 pt-[5rem]">
           {children}
         </div>
+        <Footer />
       </body>
     </html>
   )
